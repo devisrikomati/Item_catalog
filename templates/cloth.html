@@ -1,0 +1,88 @@
+<html>
+<head>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='tempstyles.css') }}">
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/1E570167-B8D8-774C-8F50-FEEF4491E7B2/main.js" charset="UTF-8"></script></head>
+<body>
+<div class = 'main'>
+		<h1>{{ shoppingmall.name }}</h1>
+		{% with messages = get_flashed_messages() %}
+      {% if messages %}  
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+    {% if details !=[] %}
+		<a href = "{{url_for('newCloth', shoppingmall_id = shoppingmall.id )}}">Create New Cloth</a>
+		</br></br>
+	 {% for i in details %}
+			{% if i.type == 'Linen'%}
+			<h2>Cotton</h2>	
+				<p>{{i.name}}</p>
+				<p>{{i.description}}</p>
+				<p>{{i.price}}</p>
+				<a href='{{url_for('editCloth', shoppingmall_id = shoppingmall.id, cloth_id=i.id ) }}'>Edit</a></br>
+				<a href='{{url_for('deleteCloth', shoppingmall_id = shoppingmall.id, cloth_id=i.id ) }}'>Delete</a></br>
+			{% endif %}
+		</br>
+			{% if i.type == 'Cotton' %}
+			<h2>Silk</h2>
+				<p>{{i.name}}</p>
+				<p>{{i.description}}</p>
+				<p>{{i.price}}</p>
+				<a href='{{url_for('editCloth', shoppingmall_id = shoppingmall.id, cloth_id=i.id ) }}'>Edit</a></br>
+				<a href='{{url_for('deleteCloth', shoppingmall_id = shoppingmall.id, cloth_id=i.id ) }}'>Delete</a>
+				</br>
+			{% endif %}
+	</br>
+	</br>
+		
+			{% if i.type == 'Silk' %}
+			<h2>Kanchi Pattu</h2>
+				<p>{{i.name}}</p>
+				<p>{{i.description}}</p>
+				<p>{{i.price}}</p>
+				<a href='{{url_for('editCloth', shoppingmall_id = shoppingmall.id, cloth_id=i.id ) }}'>Edit</a><br>
+				<a href='{{url_for('deleteCloth', shoppingmall_id = shoppingmall.id, cloth_id=i.id ) }}'>Delete</a><br>
+    </br>
+			{% endif %} 
+			{% if i.type == 'Jeans'%}
+			<h2>Silver</h2>	
+				<p>{{i.name}}</p>
+				<p>{{i.description}}</p>
+				<p>{{i.price}}</p>
+				<a href='{{url_for('editCloth', shoppingmall_id = shoppingmall.id, cloth_id=i.id ) }}'>Edit</a><br>
+				<a href='{{url_for('deleteCloth', shoppingmall_id = shoppingmall.id, cloth_id=i.id ) }}'>Delete</a><br>
+			{% endif %}
+		</br>
+			{% if i.type == 'Lether' %}
+			<h2>Gold</h2>
+				<p>{{i.name}}</p>
+				<p>{{i.description}}</p>
+				<p>{{i.price}}</p>
+				<a href='{{url_for('editCloth', shoppingmall_id = shoppingmall.id, cloth_id=i.id ) }}'>Edit</a><br>
+				<a href='{{url_for('deleteCloth', shoppingmall_id = shoppingmall.id, cloth_id=i.id ) }}'>Delete</a><br>
+				</br>
+			{% endif %}
+	</br>
+	</br>
+		
+			{% if i.type == 'Wool' %}
+			<h2>Platinum</h2>
+				<p>{{i.name}}</p>
+				<p>{{i.description}}</p>
+				<p>{{i.price}}</p>
+				<a href='{{url_for('editCloth', shoppingmall_id = shoppingmall.id, cloth_id=i.id ) }}'>Edit</a><br>
+				<a href='{{url_for('deleteCloth', shoppingmall_id = shoppingmall.id, cloth_id=i.id ) }}'>Delete</a><br>
+    </br>
+			{% endif %}
+	{% endfor %}
+	{% else %}
+		<p> You currently have no cloth details.<p>
+		<a href = "{{url_for('newCloth', shoppingmall_id = shoppingmall.id )}}">Create New Cloth</a>
+	{% endif %}
+</div>
+	</body>
+</html>

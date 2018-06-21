@@ -1,0 +1,65 @@
+body 
+ { 
+     font-family: sans-serif;
+      background-color:  rgb(161, 232, 245);
+    }
+h1, h2, h3, h4{
+            color:  rgb(247, 39, 184);
+         }
+h1, h2{
+     font-family: 'Georgia', serif;
+      margin: 0;
+     }
+h1{
+     border-bottom: 2px solid rgb(238, 238, 238);
+ }
+h2{ 
+    font-size: 1.2em;
+ }
+
+p{
+    color: #0f60f7;
+    font-size: 1.7em;
+}
+
+a{
+    text-decoration: none;
+    color:#eee;
+    font-size: .7em;
+}
+
+.top{
+    position:absolute;
+    border: 2px solid;
+    width: 500px;
+    padding: 5px;
+    margin: 5px;
+}
+.main {
+    position:absolute;
+    left: 25%;
+    width: 400px;
+    font-size: 1em;
+}
+.header{
+    left:50%;
+    text-align: center;
+}
+.name {
+    width:50%;
+    display: inline-block;
+    float: left;
+    }
+.description {}
+.price {
+    text-align: right;
+    width:50%;
+    float: right;
+}
+.editdeletetop{
+    font-size: 0.5em;
+}
+
+.flash{
+     background: #f8e10f;
+    }

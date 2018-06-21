@@ -1,0 +1,14 @@
+<html>
+<head>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='tempstyles.css') }}">
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/1E570167-B8D8-774C-8F50-FEEF4491E7B2/main.js" charset="UTF-8"></script></head>
+<body>
+<h1> Edit Shoppingmall </h1>
+<form action="{{ url_for('editShoppingmall',shoppingmall_id = shoppingmall.id)}}" method = 'post'>
+	<p>Name:</p>
+		<input type ='text' size='20' name='name' placeholder = '{{shoppingmall.name }}'>
+<input type='submit' value='Edit'>
+<a href = '{{url_for('showShoppingmalls')}}'> Cancel </a>
+</form>
+</body>
+</html>

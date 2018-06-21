@@ -1,0 +1,42 @@
+<html>
+<head>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='tempstyles.css') }}">
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/1E570167-B8D8-774C-8F50-FEEF4491E7B2/main.js" charset="UTF-8"></script></head>
+<body >
+<center>
+<h1> Edit Cloth </h1>
+<form action="{{ url_for('editCloth', shoppingmall_id=shoppingmall_id, cloth_id=cloth_id)}}" method = 'POST'>
+	<p>Name:</p>
+		<input type ='text' size='30' name='name' placeholder = '{{details.name }}'><br>
+		<input type='submit' value='Edit'>
+        <a href = '#'> Cancel </a>
+	<p>Description:</p>
+		<input type ='text' size='30' name='description' placeholder = '{{details.description}}'><br>
+		<input type='submit' value='Edit'>
+        <a href = '#'> Cancel </a>
+	<p>Price:</p>
+		<input type ='text' size='30' name='price' placeholder = '{{details.price}}'><br>
+		<input type='submit' value='Edit'>
+         <a href = '#'> Cancel </a>
+	<p>Type:<p>
+	{% if details.type == 'Linen' %}
+		<dd><input type ='radio' name='type' value='linen' checked >Linen</dd>
+	{%else%}
+	<dd><input type ='radio' name='type' value='linen' >Linen</dd>
+    {% endif %}
+    {% if details.type == 'Cotton' %}
+       <dd><input type ='radio' name='type' value='Cotton' checked>Cotton</dd>
+    {%else%}
+		<dd><input type ='radio' name='type' value='Shirts'>Cotton</dd>
+    {% endif %}
+	{% if details.type == 'Silk'%}
+		<dd><input type ='radio' name='type' value='silk'checked >Slik</dd>
+	{% else %}
+	   <dd><input type ='radio' name='type' value='silk'>Silk</dd>
+	{% endif %}<br>
+<input type='submit' value='Edit'>
+<input type='submit', value = 'Cancel'>
+</form>
+</center>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<html>
+<head>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='tempstyles.css') }}">
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/1E570167-B8D8-774C-8F50-FEEF4491E7B2/main.js" charset="UTF-8"></script></head>
+<body>
+<h1>New Shoppingmall</h1>
+<form action="{{url_for('newShoppingmall',shoppingmall_id=shoppingmall_id)}}" method = 'post'>
+	<p>Name:</p>
+		<input type ='text' size='30' name='name'>
+        <input type='submit' value='Create'>
+</form>
+</body>
+</html>
