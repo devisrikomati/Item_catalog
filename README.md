@@ -1,5 +1,4 @@
 # Item_catalog
-# Build_an_Item_Catalog
 ##This project is completely based on developing an application with usage of framework known as Flask environment OAuth2 provides authentication for further CRUD functionality on the application. Currently OAuth2 is implemented for Google Accounts.
 ##This is project is for performing a modern applications, variety of functions and provide amazing features and utilities to their users; but deep down, it’s really all just creating, reading, updating and deleting data.
 ##Needs of this project
