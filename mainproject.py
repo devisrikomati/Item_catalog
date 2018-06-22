@@ -214,15 +214,16 @@ def logout():
             del login_session['user_id']
             del login_session['provider']
             flash("You have succesfully been logout")
-            return redirect(url_for('showCompanies'))
+            return redirect(url_for('showShoppingmalls'))
     else:
         flash("You were not logged in")
-        return redirect(url_for('showCompanies'))
+        return redirect(url_for('showShoppingmalls'))
 
 
 @app.route('/shoppingmall/<int:shoppingmall_id>/cloth/JSON')
 def shoppingmallclothJSON(brand_id):
-    shoppingmall = session.query(Shoppingmall).filter_by(id=shoppingmall_id).one()
+    shoppingmall = session.query(Shoppingmall).filter_by(
+        id=shoppingmall_id).one()
     details = session.query(Cloth).filter_by(
         shoppingmall_id=shoppingmall_id).all()
     return jsonify(Cloth=[i.serialize for i in details])
@@ -244,107 +245,105 @@ def shoppingmallsJSON():
 @app.route('/')
 @app.route('/shoppingmall/')
 def showShoppingmalls():
-    session1 = DBSession()
-    shoppingmalls = session1.query(Shoppingmall).all()
+    session = DBSession()
+    shoppingmalls = session.query(Shoppingmall).all()
     # return "This page will show all my brands"
-    session1.close()
+    session.close()
     return render_template('shoppingmalls.html', shoppingmalls=shoppingmalls)
 
 
 # Create a new brand
 @app.route('/shoppingmall/new/', methods=['GET', 'POST'])
 def newShoppingmall():
-    session2 = DBSession()
+    session = DBSession()
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
         newShoppingmall = Shoppingmall(name=request.form['name'])
-        session2.add(newShoppingmall)
-        session2.commit()
-        session2.close()
+        session.add(newShoppingmall)
+        session.commit()
+        session.close()
         return redirect(url_for('showShoppingmalls'))
     else:
-        session2.close()
+        session.close()
         return render_template('newShoppingmall.html')
     # return "This page will be for making a new brand"
 
 # Edit a brand
 
 
-@app.route('/shoppingmall/<int:shoppingmall_id>/edit/', methods=['GET', 'POST'])
+@app.route('/shoppingmall/<int:shoppingmall_id>/edit/',
+           methods=['GET', 'POST'])
 def editShoppingmall(shoppingmall_id):
-    session3 = DBSession()
-    editShoppingmall = session3.query(Shoppingmall).filter_by(id=shoppingmall_id).one()
+    session = DBSession()
+    editShoppingmall = session.query(Shoppingmall).filter_by(
+                        id=shoppingmall_id).one()
     if 'username' not in login_session:
         return redirect('/login')
-        if editShoppingmall.user_id == login_session['user_id']:
-            if shoppingmall.user_id != login_session['user_id']:
-                return "<script>function myFunction() {alert('You \
-            are not authorized to edit this Shoppingmall.\
-            Please create your own entry in order \
-            to edit/delete.');}</script><body onload='myFunction()'>"
     if request.method == 'POST':
         if request.form['name']:
             print(editShoppingmall.name)
             editShoppingmall.name = request.form['name']
-            session3.add(editShoppingmall)
-            session3.commit()
-            session3.close()
-            return redirect(url_for('showShoppingmalls', shoppingmall_id=shoppingmall_id))
+            session.add(editShoppingmall)
+            session.commit()
+            session.close()
+            return redirect(url_for('showShoppingmalls',
+                            shoppingmall_id=shoppingmall_id))
     else:
-        session3.close()
-        return render_template(
-            'editShoppingmall.html', shoppingmall_id=shoppingmall_id, shoppingmall=editShoppingmall)
+        session.close()
+        return render_template('editShoppingmall.html',
+                               shoppingmall_id=shoppingmall_id,
+                               shoppingmall=editShoppingmall)
 
     # return 'This page will be for editing shoppingmall %s' % shoppingmall_id
 
 # Delete a shoppingmall
 
 
-@app.route('/shoppingmall/<int:shoppingmall_id>/delete/', methods=['GET', 'POST'])
+@app.route('/shoppingmall/<int:shoppingmall_id>/delete/',
+           methods=['GET', 'POST'])
 def deleteShoppingmall(shoppingmall_id):
-    session4 = DBSession()
-    deleteShoppingmall = session4.query(
+    session = DBSession()
+    deleteShoppingmall = session.query(
         Shoppingmall).filter_by(id=shoppingmall_id).one()
     if 'username' not in login_session:
         return redirect('/login')
-        if deleteShoppingmall.user_id == login_session['user_id']:
-            if deleteShoppingmall.user_id != login_session['user_id']:
-                return "<script>function myFunction() {alert('You \
-                are not authorized to delete this Shoppingmall.\
-                Please create your own entry in order \
-                to edit/delete.');}</script><body onload='myFunction()'>"
     if request.method == 'POST':
-        session4.delete(deleteShoppingmall)
-        session4.commit()
-        session4.close()
+        session.delete(deleteShoppingmall)
+        session.commit()
+        session.close()
         return redirect(
             url_for('showShoppingmalls', shoppingmall_id=shoppingmall_id))
     else:
-        session4.close()
-        return render_template(
-            'deleteShoppingmall.html', shoppingmall_id=shoppingmall_id, shoppingmall=deleteShoppingmall)
+        session.close()
+        return render_template('deleteShoppingmall.html',
+                               shoppingmall_id=shoppingmall_id,
+                               shoppingmall=deleteShoppingmall)
 
 
 # Show a brand product
 @app.route('/shoppingmall/<int:shoppingmall_id>/')
 @app.route('/shoppingmall/<int:shoppingmall_id>/cloth/')
 def showCloth(shoppingmall_id):
-    session5 = DBSession()
-    shoppingmall = session5.query(Shoppingmall).filter_by(id=shoppingmall_id).one()
-    details = session5.query(Cloth).filter_by(shoppingmall_id=shoppingmall_id).all()
-    session5.close()
-    return render_template('cloth.html', details=details, shoppingmall=shoppingmall)
+    session = DBSession()
+    shoppingmall = session.query(Shoppingmall).filter_by(
+                   id=shoppingmall_id).one()
+    details = session.query(Cloth).filter_by(
+              shoppingmall_id=shoppingmall_id).all()
+    session.close()
+    return render_template('cloth.html', details=details,
+                           shoppingmall=shoppingmall)
     # return 'This page is the product for brand %s' % brand_id
 
 # Create a new product details
 
 
-@app.route(
-    '/shoppingmall/<int:shoppingmall_id>/shoppingmall/new/', methods=['GET', 'POST'])
+@app.route('/shoppingmall/<int:shoppingmall_id>/shoppingmall/new/',
+           methods=['GET', 'POST'])
 def newCloth(shoppingmall_id):
-    session6 = DBSession()
-    shoppingmall = session6.query(Shoppingmall).filter_by(id=shoppingmall_id).one()
+    session = DBSession()
+    shoppingmall = session.query(Shoppingmall).filter_by(
+                   id=shoppingmall_id).one()
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
@@ -356,16 +355,17 @@ def newCloth(shoppingmall_id):
             shoppingmall_id=shoppingmall_id,
             user_id=shoppingmall.user_id)
 
-        session6.add(newShoppingmall)
-        session6.commit()
-        session6.close()
+        session.add(newShoppingmall)
+        session.commit()
+        session.close()
 
         return redirect(url_for('showCloth', shoppingmall_id=shoppingmall_id))
     else:
-        return render_template('newCloth.html', shoppingmall_id=shoppingmall_id)
+        return render_template('newCloth.html',
+                               shoppingmall_id=shoppingmall_id)
 
     return render_template('newCloth.html')
-    # return 'This page is for making a new product details for shoppingmall %s'
+# return 'This page is for making a new product details for shoppingmall %s'
 
 # Edit a cloth details
 
@@ -373,17 +373,12 @@ def newCloth(shoppingmall_id):
 @app.route('/shoppingmall/<int:shoppingmall_id>/cloth/<int:cloth_id>/edit',
            methods=['GET', 'POST'])
 def editCloth(shoppingmall_id, cloth_id):
-    session7 = DBSession()
+    session = DBSession()
     if 'username' not in login_session:
         return redirect('/login')
-    editCloth = session7.query(Cloth).filter_by(id=cloth_id).one()
-    shoppingmall = session7.query(Shoppingmall).filter_by(id=shoppingmall_id).one()
-    if login_session['user_id'] == shoppingmall.user_id:
-        if shoppingmall.user_id != login_session['user_id']:
-            return "<script>function myFunction() {alert('You \
-            are not authorized to edit this Shoppingmall.\
-            Please create your own entry in order \
-            to edit/delete.');}</script><body onload='myFunction()'>"
+    editCloth = session.query(Cloth).filter_by(id=cloth_id).one()
+    shoppingmall = session.query(Shoppingmall).filter_by(
+                   id=shoppingmall_id).one()
     if request.method == 'POST':
         if request.form['name']:
             editCloth.name = request.form['name']
@@ -393,13 +388,14 @@ def editCloth(shoppingmall_id, cloth_id):
             editCloth.price = request.form['price']
         if request.form['type']:
             editCloth.type = request.form['type']
-        session7.add(editCloth)
-        session7.commit()
-        session7.close()
+        session.add(editCloth)
+        session.commit()
+        session.close()
         return redirect(url_for('showCloth', shoppingmall_id=shoppingmall_id))
     else:
-        return render_template('editCloth.html', shoppingmall_id=shoppingmall_id,
-                        cloth_id=cloth_id, details=editCloth)
+        return render_template('editCloth.html',
+                               shoppingmall_id=shoppingmall_id,
+                               cloth_id=cloth_id, details=editCloth)
 
     # return 'This page is for editing product details %s' % product_id
 
@@ -409,24 +405,20 @@ def editCloth(shoppingmall_id, cloth_id):
 @app.route('/shoppingmall/<int:shoppingmall_id>/cloth/<int:cloth_id>/delete',
            methods=['GET', 'POST'])
 def deleteCloth(shoppingmall_id, cloth_id):
-    session8 = DBSession()
+    session = DBSession()
     if 'username' not in login_session:
         return redirect('/login')
-    shoppingmall = session8.query(Shoppingmall).filter_by(id=shoppingmall_id).one()
-    deleteCloth = session8.query(Cloth).filter_by(id=cloth_id).one()
-    if login_session['user_id'] == shoppingmall.user_id:
-        if shoppingmall.user_id != login_session['user_id']:
-            return "<script>function myFunction() {alert('You \
-            are not authorized to delete this shoppingmall.\
-            Please create your own entry in order \
-            to edit/delete.');}</script><body onload='myFunction()'>"
+    shoppingmall = session.query(Shoppingmall).filter_by(
+                   id=shoppingmall_id).one()
+    deleteCloth = session.query(Cloth).filter_by(id=cloth_id).one()
     if request.method == 'POST':
-        session8.delete(deleteCloth)
-        session8.commit()
-        session8.close()
+        session.delete(deleteCloth)
+        session.commit()
+        session.close()
         return redirect(url_for('showCloth', shoppingmall_id=shoppingmall_id))
     else:
-        return render_template('deleteCloth.html', shoppingmall_id=shoppingmall_id,
+        return render_template('deleteCloth.html',
+                               shoppingmall_id=shoppingmall_id,
                                cloth_id=cloth_id, details=deleteCloth)
     # return "This page is for deleting cloth details %s" % cloth_id
 
